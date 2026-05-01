@@ -1,33 +1,35 @@
-# <img src="assets/logo.png" width="40" height="40" valign="middle"> AviTrack - Gestión de Cría de Aves
+# 🕊️ AviTrack - Gestión Avanzada de Cría de Aves
 
-AviTrack es una aplicación móvil diseñada para criadores de aves que buscan un control total, preciso y **100% privado** de sus nidadas. La aplicación funciona de forma totalmente local, sin necesidad de conexión a internet ni servicios en la nube.
+AviTrack es una aplicación moderna y profesional diseñada para criadores de aves que buscan un control total sobre sus nidadas. Con un diseño elegante y herramientas inteligentes, AviTrack te ayuda a que ningún nacimiento te pille por sorpresa.
 
-## 🚀 Características Principales
+![Logo](assets/logo.png)
 
-- **Gestión de Nidadas:** Registra y sigue el progreso de tus parejas desde el primer huevo hasta el destete.
-- **Diccionario de Especies:** Incluye una base de datos preconfigurada con más de 10 especies comunes (Canarios, Periquitos, Agapornis, Ninfas, Gould, Loro Gris, etc.) con sus tiempos de incubación y tipos de puesta.
-- **Cálculos Automáticos:** La app calcula automáticamente la fecha prevista de eclosión y el margen de seguridad para cada nidada.
-- **Sistema de Notificaciones Inteligente:** 
-  - Avisos matutinos a las **09:00 AM**.
-  - Notificaciones de seguimiento de puesta (huevo a huevo).
-  - Alertas de eclosión el día previsto.
-  - Alertas de fin de margen para revisar el nido.
-- **Diseño Moderno:** Interfaz limpia basada en Material 3, con Cards informativas y estados visuales claros (Gris: Puesta, Azul: Incubando, Naranja: Margen, Verde: Finalizada).
-- **Personalización Total:** Aunque incluye especies preconfiguradas, el usuario puede añadir nuevas especies o ajustar los días de incubación y margen. Esto es ideal para adaptarse a climas extremos o experiencias personales que afecten los tiempos naturales.
+## ✨ Características Principales
 
-## 📱 Especificaciones Técnicas y Restricciones
+*   **📊 Seguimiento de Nidadas:** Registra la puesta de huevos, el inicio de la incubación y la fecha prevista de eclosión.
+*   **⏳ Margen Extra Personalizable:** Configura días de margen adicionales tras la eclosión para cada nidada individualmente. ¡Tú decides cuánto esperar!
+*   **🔔 Notificaciones Inteligentes:** Alarmas automáticas para avisarte de cada huevo y del día del nacimiento, siempre a las 09:00 AM.
+*   **📖 Diccionario de Especies:** Base de datos editable con los tiempos de incubación y márgenes por defecto para canarios, periquitos y más.
+*   **🌓 Modo Oscuro Dinámico:** Elige entre modo Claro, Oscuro o deja que la app siga automáticamente la configuración de tu móvil.
+*   **🍳 Contador de Huevos:** Suma o resta huevos en tiempo real durante la fase de puesta con un solo toque.
 
-- **Plataforma:** Exclusivo para **Android**.
-- **Orientación:** Bloqueado en **Modo Vertical (Portrait)** para una mejor experiencia de uso en mano.
-- **Privacidad:** **100% Local**. No usa Firebase ni APIs externas. Tus datos nunca salen de tu dispositivo.
-- **Tecnología:** Construido con Flutter y base de datos Isar (la más rápida para dispositivos móviles).
+## 🛠️ Instalación y Compilación
 
-## 🛠️ Cómo funciona
+AviTrack está construido con **Flutter** y utiliza **Isar Database** para un almacenamiento ultra rápido y local.
 
-1. **Nueva Nidada:** Selecciona la pareja y la especie. La app registrará el inicio de la puesta.
-2. **Seguimiento:** Recibirás avisos los días que corresponda poner huevo según la especie.
-3. **Fin de Puesta:** Cuando la hembra termine de poner, pulsa "Fin Puesta" para activar la cuenta atrás de incubación.
-4. **Eclosión:** La app te avisará el día que deberían nacer los polluelos y te dará unos días de margen antes de dar la nidada por fallida.
+### Requisitos
+*   Flutter SDK (v3.41 o superior recomendado)
+*   Android SDK 34+
+
+### Compilación
+Para generar tu propia APK de lanzamiento:
+```powershell
+flutter build apk --release
+```
+El archivo generado se encontrará en: `build\app\outputs\flutter-apk\app-release.apk`
+
+## 📱 Capturas de Pantalla
+*(Próximamente)*
 
 ---
-*Desarrollado para amantes de la ornitología que valoran la simplicidad y la privacidad.*
+Desarrollado con ❤️ para criadores apasionados.

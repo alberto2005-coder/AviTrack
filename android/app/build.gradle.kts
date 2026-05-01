@@ -7,8 +7,12 @@ plugins {
 
 android {
     namespace = "com.avitrack.avitrack"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
+
+    sourceSets {
+        getByName("main").java.srcDirs("src/main/kotlin")
+    }
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
@@ -24,9 +28,9 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.avitrack.avitrack"
         // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         multiDexEnabled = true

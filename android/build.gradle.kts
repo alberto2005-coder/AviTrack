@@ -37,6 +37,19 @@ subprojects {
     }
 }
 
+subprojects {
+    afterEvaluate {
+        if (project.extensions.findByName("android") != null) {
+            project.extensions.configure<com.android.build.gradle.BaseExtension> {
+                compileSdkVersion(34)
+                defaultConfig {
+                    targetSdkVersion(34)
+                }
+            }
+        }
+    }
+}
+
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
