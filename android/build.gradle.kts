@@ -15,16 +15,20 @@ subprojects {
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
 }
+
 subprojects {
     project.evaluationDependsOn(":app")
 }
 
 subprojects {
-    afterEvaluate {
-        if (project.extensions.findByName("android") != null) {
-            val android = project.extensions.getByName("android") as com.android.build.gradle.BaseExtension
-            if (android.namespace == null) {
-                android.namespace = "com.avitrack." + project.name.replace("-", "_")
+    val proj = this
+    if (proj.name != "app") {
+        proj.plugins.whenPluginAdded {
+            if (this is com.android.build.gradle.api.AndroidBasePlugin || this.toString().contains("com.android.build.gradle.LibraryPlugin")) {
+                val android = proj.extensions.findByName("android") as? com.android.build.gradle.BaseExtension
+                if (android != null && android.namespace == null) {
+                    android.namespace = "com.avitrack." + proj.name.replace("-", "_")
+                }
             }
         }
     }
