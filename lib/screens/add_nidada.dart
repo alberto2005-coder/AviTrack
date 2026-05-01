@@ -63,7 +63,7 @@ class _AddNidadaScreenState extends State<AddNidadaScreen> {
                     ),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<Species>(
-                      initialValue: _selectedSpecies,
+                      value: _selectedSpecies,
                       decoration: const InputDecoration(
                         labelText: 'Especie',
                         border: OutlineInputBorder(),
@@ -107,26 +107,34 @@ class _AddNidadaScreenState extends State<AddNidadaScreen> {
 
   Future<void> _saveNidada() async {
     if (_formKey.currentState!.validate()) {
-      final nidada = Nidada(
-        pairName: _nameController.text,
-        startDate: DateTime.now(),
-        status: NidadaStatus.puesta,
-        currentEggCount: 1, // First egg usually when they start
-      );
-      
-      nidada.species.value = _selectedSpecies;
-      
-      await DatabaseService.saveNidada(nidada);
-      
-      if (_selectedSpecies != null) {
-        await NotificationService.scheduleLayingNotifications(nidada, _selectedSpecies!);
-      }
-
-      if (mounted) {
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Nidada iniciada y notificaciones programadas.')),
+      try {
+        final nidada = Nidada(
+          pairName: _nameController.text,
+          startDate: DateTime.now(),
+          status: NidadaStatus.puesta,
+          currentEggCount: 1,
         );
+        
+        nidada.species.value = _selectedSpecies;
+        
+        await DatabaseService.saveNidada(nidada);
+        
+        if (_selectedSpecies != null) {
+          await NotificationService.scheduleLayingNotifications(nidada, _selectedSpecies!);
+        }
+
+        if (mounted) {
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Nidada iniciada y notificaciones programadas.')),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error al guardar: $e')),
+          );
+        }
       }
     }
   }
