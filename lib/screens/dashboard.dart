@@ -123,7 +123,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _navigateToAddNidada(context),
-        label: const Text('Nueva Nuesta'),
+        label: const Text('Nueva Puesta'),
         icon: const Icon(Icons.add),
       ),
     );
