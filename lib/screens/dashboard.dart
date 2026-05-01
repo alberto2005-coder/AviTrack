@@ -5,6 +5,7 @@ import '../services/notification_service.dart';
 import '../widgets/nidada_card.dart';
 import 'add_nidada.dart';
 import 'species_list.dart';
+import '../main.dart'; // Importar themeNotifier
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -21,6 +22,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
         title: const Text('AviTrack Dashboard'),
         centerTitle: true,
         actions: [
+          ValueListenableBuilder<ThemeMode>(
+            valueListenable: themeNotifier,
+            builder: (context, mode, _) {
+              IconData icon;
+              if (mode == ThemeMode.system) {
+                icon = Icons.brightness_auto;
+              } else if (mode == ThemeMode.dark) {
+                icon = Icons.dark_mode;
+              } else {
+                icon = Icons.light_mode;
+              }
+              return IconButton(
+                icon: Icon(icon),
+                onPressed: () {
+                  if (mode == ThemeMode.system) {
+                    themeNotifier.value = ThemeMode.light;
+                  } else if (mode == ThemeMode.light) {
+                    themeNotifier.value = ThemeMode.dark;
+                  } else {
+                    themeNotifier.value = ThemeMode.system;
+                  }
+                },
+                tooltip: 'Cambiar tema',
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.menu_book),
             onPressed: () {
