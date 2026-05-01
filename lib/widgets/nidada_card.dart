@@ -133,7 +133,7 @@ class NidadaCard extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.remove_circle_outline),
                     onPressed: nidada.currentEggCount > 0 
-                        ? () => _updateEggCount(nidada.currentEggCount - 1)
+                        ? () => _updateEggCount(context, nidada.currentEggCount - 1)
                         : null,
                     color: Colors.red.shade300,
                   ),
@@ -143,7 +143,7 @@ class NidadaCard extends StatelessWidget {
                   ),
                   IconButton(
                     icon: const Icon(Icons.add_circle_outline),
-                    onPressed: () => _updateEggCount(nidada.currentEggCount + 1),
+                    onPressed: () => _updateEggCount(context, nidada.currentEggCount + 1),
                     color: Colors.green.shade300,
                   ),
                 ],
@@ -249,10 +249,27 @@ class NidadaCard extends StatelessWidget {
     }
   }
 
-  Future<void> _updateEggCount(int newCount) async {
-    nidada.currentEggCount = newCount;
-    await DatabaseService.isar.writeTxn(() async {
-      await DatabaseService.isar.nidadas.put(nidada);
-    });
+  Future<void> _updateEggCount(BuildContext context, int newCount) async {
+    try {
+      await DatabaseService.isar.writeTxn(() async {
+        nidada.currentEggCount = newCount;
+        await DatabaseService.isar.nidadas.put(nidada);
+      });
+      
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Huevos actualizados: $newCount'),
+            duration: const Duration(milliseconds: 500),
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al actualizar huevos: $e')),
+        );
+      }
+    }
   }
 }
