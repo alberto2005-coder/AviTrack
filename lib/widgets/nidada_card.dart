@@ -39,10 +39,21 @@ class NidadaCard extends StatelessWidget {
         statusText = 'Incubando';
         final hatchingDate = nidada.expectedHatchingDate;
         if (hatchingDate != null) {
-          final remaining = hatchingDate.difference(DateTime.now()).inDays;
-          detailText = remaining >= 0 
-              ? 'Faltan $remaining días' 
-              : 'Día de eclosión!';
+          final now = DateTime.now();
+          if (now.isBefore(hatchingDate)) {
+            final remaining = hatchingDate.difference(now).inDays + 1;
+            detailText = 'Faltan $remaining días para nacer';
+          } else {
+            final limitDate = nidada.marginLimitDate;
+            if (limitDate != null && now.isBefore(limitDate)) {
+              final remaining = limitDate.difference(now).inDays + 1;
+              detailText = 'En margen: $remaining d. restantes';
+              statusColor = Colors.orange; // Resaltar que estamos en margen
+            } else {
+              detailText = 'Revisar nido urg.';
+              statusColor = Colors.red;
+            }
+          }
         }
         break;
       case NidadaStatus.margen:
@@ -50,9 +61,9 @@ class NidadaCard extends StatelessWidget {
         statusText = 'En Margen';
         final limitDate = nidada.marginLimitDate;
         if (limitDate != null) {
-          final remaining = limitDate.difference(DateTime.now()).inDays;
-          detailText = remaining >= 0 
-              ? 'Esperando... ($remaining d)' 
+          final remaining = limitDate.difference(DateTime.now()).inDays + 1;
+          detailText = remaining > 0 
+              ? 'Esperando... ($remaining d. restantes)' 
               : 'Revisar nido urg.';
         }
         break;
