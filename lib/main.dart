@@ -13,15 +13,17 @@ void main() async {
   
   // Cargar preferencia de tema guardada
   final prefs = await SharedPreferences.getInstance();
-  final themeIndex = prefs.getInt('themeMode') ?? 0; // 0 = system, 1 = light, 2 = dark
+  final themeIndex = prefs.getInt('themeMode') ?? 0;
   themeNotifier.value = ThemeMode.values[themeIndex];
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  
   await DatabaseService.initialize();
   await NotificationService.initialize();
+  
   runApp(const AviTrackApp());
 }
 

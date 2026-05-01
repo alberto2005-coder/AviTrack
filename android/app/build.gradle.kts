@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.avitrack.avitrack"
-    compileSdk = 36
+    compileSdk = 34
     ndkVersion = flutter.ndkVersion
 
     sourceSets {
