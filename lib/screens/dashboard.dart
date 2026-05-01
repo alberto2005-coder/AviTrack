@@ -27,21 +27,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
             builder: (context, mode, _) {
               IconData icon;
               if (mode == ThemeMode.system) {
-                icon = Icons.brightness_auto;
+                icon = Icons.brightness_medium;
               } else if (mode == ThemeMode.dark) {
-                icon = Icons.dark_mode;
+                icon = Icons.nightlight_round;
               } else {
-                icon = Icons.light_mode;
+                icon = Icons.wb_sunny;
               }
               return IconButton(
                 icon: Icon(icon),
                 onPressed: () {
-                  if (mode == ThemeMode.system) {
-                    themeNotifier.value = ThemeMode.light;
-                  } else if (mode == ThemeMode.light) {
+                  if (mode == ThemeMode.light) {
                     themeNotifier.value = ThemeMode.dark;
-                  } else {
+                  } else if (mode == ThemeMode.dark) {
                     themeNotifier.value = ThemeMode.system;
+                  } else {
+                    themeNotifier.value = ThemeMode.light;
                   }
                 },
                 tooltip: 'Cambiar tema',
