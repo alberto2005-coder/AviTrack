@@ -18,11 +18,14 @@ subprojects {
 
 subprojects {
     project.evaluationDependsOn(":app")
+    // Forzamos el SDK 34 en todos los subproyectos antes de que se evalúen
     val proj = this
-    proj.plugins.whenPluginAdded {
-        if (this is com.android.build.gradle.api.AndroidBasePlugin || this.toString().contains("com.android.build.gradle.LibraryPlugin")) {
-            val android = proj.extensions.findByName("android") as? com.android.build.gradle.BaseExtension
-            android?.compileSdkVersion(34)
+    if (proj.name != "app") {
+        proj.afterEvaluate {
+            if (proj.plugins.hasPlugin("com.android.library") || proj.plugins.hasPlugin("com.android.application")) {
+                val android = proj.extensions.findByName("android") as? com.android.build.gradle.BaseExtension
+                android?.compileSdkVersion(34)
+            }
         }
     }
 }
