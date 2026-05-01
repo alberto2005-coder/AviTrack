@@ -22,7 +22,7 @@ class NotificationService {
       iOS: initializationSettingsIOS,
     );
 
-    await _notificationsPlugin.initialize(initializationSettings);
+    await _notificationsPlugin.initialize(settings: initializationSettings);
 
     // Request permissions for Android 13+
     final androidImplementation = _notificationsPlugin
@@ -50,11 +50,11 @@ class NotificationService {
 
       if (scheduledTime.isAfter(DateTime.now())) {
         await _notificationsPlugin.zonedSchedule(
-          nidada.id * 100 + i,
-          'AviTrack: Huevo N° $i',
-          'Pareja ${nidada.pairName}: Hoy debería poner el huevo N° $i',
-          scheduledTime,
-          const NotificationDetails(
+          id: nidada.id * 100 + i,
+          title: 'AviTrack: Huevo N° $i',
+          body: 'Pareja ${nidada.pairName}: Hoy debería poner el huevo N° $i',
+          scheduledDate: scheduledTime,
+          notificationDetails: const NotificationDetails(
             android: AndroidNotificationDetails(
               'laying_channel',
               'Seguimiento de Puesta',
@@ -64,8 +64,6 @@ class NotificationService {
             ),
           ),
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-          uiLocalNotificationDateInterpretation:
-              UILocalNotificationDateInterpretation.absoluteTime,
         );
       }
     }
@@ -74,7 +72,7 @@ class NotificationService {
   static Future<void> scheduleHatchingNotifications(Nidada nidada, Species species) async {
     // Cancel previous laying notifications
     for (int i = 1; i <= 10; i++) {
-      await _notificationsPlugin.cancel(nidada.id * 100 + i);
+      await _notificationsPlugin.cancel(id: nidada.id * 100 + i);
     }
 
     final hatchingDate = nidada.expectedHatchingDate;
@@ -89,11 +87,11 @@ class NotificationService {
 
       if (scheduledTime.isAfter(DateTime.now())) {
         await _notificationsPlugin.zonedSchedule(
-          nidada.id * 1000 + 1,
-          'AviTrack: Día de Eclosión',
-          'Pareja ${nidada.pairName}: Hoy es el día previsto para el nacimiento',
-          scheduledTime,
-          const NotificationDetails(
+          id: nidada.id * 1000 + 1,
+          title: 'AviTrack: Día de Eclosión',
+          body: 'Pareja ${nidada.pairName}: Hoy es el día previsto para el nacimiento',
+          scheduledDate: scheduledTime,
+          notificationDetails: const NotificationDetails(
             android: AndroidNotificationDetails(
               'hatching_channel',
               'Seguimiento de Eclosión',
@@ -103,8 +101,6 @@ class NotificationService {
             ),
           ),
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-          uiLocalNotificationDateInterpretation:
-              UILocalNotificationDateInterpretation.absoluteTime,
         );
       }
     }
@@ -121,11 +117,11 @@ class NotificationService {
 
       if (scheduledTime.isAfter(DateTime.now())) {
         await _notificationsPlugin.zonedSchedule(
-          nidada.id * 1000 + 2,
-          'AviTrack: Fin de Margen',
-          'Atención: Ha pasado el tiempo de margen para la Pareja ${nidada.pairName}. Revisa el nido.',
-          scheduledTime,
-          const NotificationDetails(
+          id: nidada.id * 1000 + 2,
+          title: 'AviTrack: Fin de Margen',
+          body: 'Atención: Ha pasado el tiempo de margen para la Pareja ${nidada.pairName}. Revisa el nido.',
+          scheduledDate: scheduledTime,
+          notificationDetails: const NotificationDetails(
             android: AndroidNotificationDetails(
               'margin_channel',
               'Alerta de Margen',
@@ -135,8 +131,6 @@ class NotificationService {
             ),
           ),
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-          uiLocalNotificationDateInterpretation:
-              UILocalNotificationDateInterpretation.absoluteTime,
         );
       }
     }

@@ -63,7 +63,7 @@ class _AddNidadaScreenState extends State<AddNidadaScreen> {
                     ),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<Species>(
-                      value: _selectedSpecies,
+                      initialValue: _selectedSpecies,
                       decoration: const InputDecoration(
                         labelText: 'Especie',
                         border: OutlineInputBorder(),

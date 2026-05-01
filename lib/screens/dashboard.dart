@@ -4,6 +4,7 @@ import '../services/database_service.dart';
 import '../services/notification_service.dart';
 import '../widgets/nidada_card.dart';
 import 'add_nidada.dart';
+import 'species_list.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -19,6 +20,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         title: const Text('AviTrack Dashboard'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.menu_book),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const SpeciesListScreen()),
+              );
+            },
+            tooltip: 'Diccionario de Aves',
+          ),
+        ],
       ),
       body: StreamBuilder<List<Nidada>>(
         stream: DatabaseService.watchNidadas(),
