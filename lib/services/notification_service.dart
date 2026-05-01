@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz_data;
@@ -66,7 +65,6 @@ class NotificationService {
           ),
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         );
-        debugPrint('[AviTrack] Programado Huevo N° $i para: $scheduledTime');
       }
     }
   }
@@ -104,7 +102,6 @@ class NotificationService {
           ),
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         );
-        debugPrint('[AviTrack] Programada Eclosión para: $scheduledTime');
       }
     }
 
@@ -135,7 +132,6 @@ class NotificationService {
           ),
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         );
-        debugPrint('[AviTrack] Programada Alerta de Margen para: $scheduledTime');
       }
     }
   }
