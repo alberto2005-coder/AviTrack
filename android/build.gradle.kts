@@ -18,6 +18,13 @@ subprojects {
 
 subprojects {
     project.evaluationDependsOn(":app")
+    val proj = this
+    proj.plugins.whenPluginAdded {
+        if (this is com.android.build.gradle.api.AndroidBasePlugin || this.toString().contains("com.android.build.gradle.LibraryPlugin")) {
+            val android = proj.extensions.findByName("android") as? com.android.build.gradle.BaseExtension
+            android?.compileSdkVersion(34)
+        }
+    }
 }
 
 subprojects {
@@ -41,7 +48,7 @@ subprojects {
     project.configurations.all {
         resolutionStrategy.eachDependency {
             if (requested.group == "androidx.core" && (requested.name == "core" || requested.name == "core-ktx")) {
-                useVersion("1.6.0")
+                useVersion("1.13.1")
             }
         }
     }
