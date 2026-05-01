@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'services/database_service.dart';
 import 'services/notification_service.dart';
 import 'screens/dashboard.dart';
@@ -9,6 +10,12 @@ final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Cargar preferencia de tema guardada
+  final prefs = await SharedPreferences.getInstance();
+  final themeIndex = prefs.getInt('themeMode') ?? 0; // 0 = system, 1 = light, 2 = dark
+  themeNotifier.value = ThemeMode.values[themeIndex];
+
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

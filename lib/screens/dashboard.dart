@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/nidada.dart';
 import '../services/database_service.dart';
 import '../services/notification_service.dart';
@@ -35,14 +36,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
               }
               return IconButton(
                 icon: Icon(icon),
-                onPressed: () {
+                onPressed: () async {
+                  ThemeMode newMode;
                   if (mode == ThemeMode.light) {
-                    themeNotifier.value = ThemeMode.dark;
+                    newMode = ThemeMode.dark;
                   } else if (mode == ThemeMode.dark) {
-                    themeNotifier.value = ThemeMode.system;
+                    newMode = ThemeMode.system;
                   } else {
-                    themeNotifier.value = ThemeMode.light;
+                    newMode = ThemeMode.light;
                   }
+                  
+                  themeNotifier.value = newMode;
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.setInt('themeMode', newMode.index);
                 },
                 tooltip: 'Cambiar tema',
               );
