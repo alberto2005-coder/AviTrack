@@ -7,7 +7,16 @@
 .buildlog/
 .history
 
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
 
+# Local configuration
+local.properties
+.env*
 
 # Flutter repo-specific
 /bin/cache/
@@ -66,6 +75,7 @@ unlinked_spec.ds
 **/ios/**/*sync/
 **/ios/**/.sconsign.dblite
 **/ios/**/.tags*
+**/ios/**/.tags_sorted_by_file
 **/ios/**/.vagrant/
 **/ios/**/DerivedData/
 **/ios/**/Icon?
