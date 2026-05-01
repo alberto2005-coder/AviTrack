@@ -22,33 +22,38 @@ const NidadaSchema = CollectionSchema(
       name: r'currentEggCount',
       type: IsarType.long,
     ),
-    r'expectedHatchingDate': PropertySchema(
+    r'customMarginDays': PropertySchema(
       id: 1,
+      name: r'customMarginDays',
+      type: IsarType.long,
+    ),
+    r'expectedHatchingDate': PropertySchema(
+      id: 2,
       name: r'expectedHatchingDate',
       type: IsarType.dateTime,
     ),
     r'incubationStartDate': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'incubationStartDate',
       type: IsarType.dateTime,
     ),
     r'marginLimitDate': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'marginLimitDate',
       type: IsarType.dateTime,
     ),
     r'pairName': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'pairName',
       type: IsarType.string,
     ),
     r'startDate': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'startDate',
       type: IsarType.dateTime,
     ),
     r'status': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'status',
       type: IsarType.byte,
       enumMap: _NidadastatusEnumValueMap,
@@ -92,12 +97,13 @@ void _nidadaSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.currentEggCount);
-  writer.writeDateTime(offsets[1], object.expectedHatchingDate);
-  writer.writeDateTime(offsets[2], object.incubationStartDate);
-  writer.writeDateTime(offsets[3], object.marginLimitDate);
-  writer.writeString(offsets[4], object.pairName);
-  writer.writeDateTime(offsets[5], object.startDate);
-  writer.writeByte(offsets[6], object.status.index);
+  writer.writeLong(offsets[1], object.customMarginDays);
+  writer.writeDateTime(offsets[2], object.expectedHatchingDate);
+  writer.writeDateTime(offsets[3], object.incubationStartDate);
+  writer.writeDateTime(offsets[4], object.marginLimitDate);
+  writer.writeString(offsets[5], object.pairName);
+  writer.writeDateTime(offsets[6], object.startDate);
+  writer.writeByte(offsets[7], object.status.index);
 }
 
 Nidada _nidadaDeserialize(
@@ -108,10 +114,11 @@ Nidada _nidadaDeserialize(
 ) {
   final object = Nidada(
     currentEggCount: reader.readLongOrNull(offsets[0]) ?? 0,
-    incubationStartDate: reader.readDateTimeOrNull(offsets[2]),
-    pairName: reader.readString(offsets[4]),
-    startDate: reader.readDateTimeOrNull(offsets[5]),
-    status: _NidadastatusValueEnumMap[reader.readByteOrNull(offsets[6])] ??
+    customMarginDays: reader.readLongOrNull(offsets[1]),
+    incubationStartDate: reader.readDateTimeOrNull(offsets[3]),
+    pairName: reader.readString(offsets[5]),
+    startDate: reader.readDateTimeOrNull(offsets[6]),
+    status: _NidadastatusValueEnumMap[reader.readByteOrNull(offsets[7])] ??
         NidadaStatus.puesta,
   );
   object.id = id;
@@ -128,16 +135,18 @@ P _nidadaDeserializeProp<P>(
     case 0:
       return (reader.readLongOrNull(offset) ?? 0) as P;
     case 1:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 2:
       return (reader.readDateTimeOrNull(offset)) as P;
     case 3:
       return (reader.readDateTimeOrNull(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
-    case 5:
       return (reader.readDateTimeOrNull(offset)) as P;
+    case 5:
+      return (reader.readString(offset)) as P;
     case 6:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 7:
       return (_NidadastatusValueEnumMap[reader.readByteOrNull(offset)] ??
           NidadaStatus.puesta) as P;
     default:
@@ -293,6 +302,77 @@ extension NidadaQueryFilter on QueryBuilder<Nidada, Nidada, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'currentEggCount',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Nidada, Nidada, QAfterFilterCondition> customMarginDaysIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'customMarginDays',
+      ));
+    });
+  }
+
+  QueryBuilder<Nidada, Nidada, QAfterFilterCondition>
+      customMarginDaysIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'customMarginDays',
+      ));
+    });
+  }
+
+  QueryBuilder<Nidada, Nidada, QAfterFilterCondition> customMarginDaysEqualTo(
+      int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'customMarginDays',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Nidada, Nidada, QAfterFilterCondition>
+      customMarginDaysGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'customMarginDays',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Nidada, Nidada, QAfterFilterCondition> customMarginDaysLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'customMarginDays',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Nidada, Nidada, QAfterFilterCondition> customMarginDaysBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'customMarginDays',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -855,6 +935,18 @@ extension NidadaQuerySortBy on QueryBuilder<Nidada, Nidada, QSortBy> {
     });
   }
 
+  QueryBuilder<Nidada, Nidada, QAfterSortBy> sortByCustomMarginDays() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'customMarginDays', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Nidada, Nidada, QAfterSortBy> sortByCustomMarginDaysDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'customMarginDays', Sort.desc);
+    });
+  }
+
   QueryBuilder<Nidada, Nidada, QAfterSortBy> sortByExpectedHatchingDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'expectedHatchingDate', Sort.asc);
@@ -938,6 +1030,18 @@ extension NidadaQuerySortThenBy on QueryBuilder<Nidada, Nidada, QSortThenBy> {
   QueryBuilder<Nidada, Nidada, QAfterSortBy> thenByCurrentEggCountDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'currentEggCount', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Nidada, Nidada, QAfterSortBy> thenByCustomMarginDays() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'customMarginDays', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Nidada, Nidada, QAfterSortBy> thenByCustomMarginDaysDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'customMarginDays', Sort.desc);
     });
   }
 
@@ -1033,6 +1137,12 @@ extension NidadaQueryWhereDistinct on QueryBuilder<Nidada, Nidada, QDistinct> {
     });
   }
 
+  QueryBuilder<Nidada, Nidada, QDistinct> distinctByCustomMarginDays() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'customMarginDays');
+    });
+  }
+
   QueryBuilder<Nidada, Nidada, QDistinct> distinctByExpectedHatchingDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'expectedHatchingDate');
@@ -1081,6 +1191,12 @@ extension NidadaQueryProperty on QueryBuilder<Nidada, Nidada, QQueryProperty> {
   QueryBuilder<Nidada, int, QQueryOperations> currentEggCountProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'currentEggCount');
+    });
+  }
+
+  QueryBuilder<Nidada, int?, QQueryOperations> customMarginDaysProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'customMarginDays');
     });
   }
 

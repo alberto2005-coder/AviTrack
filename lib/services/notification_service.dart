@@ -65,6 +65,7 @@ class NotificationService {
           ),
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         );
+        print('[AviTrack] Programado Huevo N° $i para: $scheduledTime');
       }
     }
   }
@@ -102,6 +103,7 @@ class NotificationService {
           ),
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         );
+        print('[AviTrack] Programada Eclosión para: $scheduledTime');
       }
     }
 
@@ -132,6 +134,7 @@ class NotificationService {
           ),
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         );
+        print('[AviTrack] Programada Alerta de Margen para: $scheduledTime');
       }
     }
   }

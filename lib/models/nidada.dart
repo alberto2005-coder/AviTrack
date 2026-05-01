@@ -15,6 +15,7 @@ class Nidada {
 
   late DateTime? startDate; // Date when laying started
   late DateTime? incubationStartDate; // Date when incubation started (End of laying)
+  int? customMarginDays; // Margen personalizado para esta nidada
   
   @enumerated
   late NidadaStatus status;
@@ -25,6 +26,7 @@ class Nidada {
     required this.pairName,
     this.startDate,
     this.incubationStartDate,
+    this.customMarginDays,
     this.status = NidadaStatus.puesta,
     this.currentEggCount = 0,
   });
@@ -37,7 +39,9 @@ class Nidada {
 
   // Calculate margin limit date: expectedHatchingDate + marginDays
   DateTime? get marginLimitDate {
-    if (expectedHatchingDate == null || species.value == null) return null;
-    return expectedHatchingDate!.add(Duration(days: species.value!.marginDays));
+    final hatchDate = expectedHatchingDate;
+    if (hatchDate == null || species.value == null) return null;
+    final margin = customMarginDays ?? species.value!.marginDays;
+    return hatchDate.add(Duration(days: margin));
   }
 }

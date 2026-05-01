@@ -130,9 +130,13 @@ class NidadaCard extends StatelessWidget {
                 ),
                 if (nidada.status == NidadaStatus.puesta)
                   ElevatedButton.icon(
-                    onPressed: onStartIncubation,
-                    icon: const Icon(Icons.egg_rounded),
+                    onPressed: () => _showFinPuestaDialog(context),
+                    icon: const Icon(Icons.timer),
                     label: const Text('Fin Puesta'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                    ),
                   ),
                 if (nidada.status == NidadaStatus.incubando || nidada.status == NidadaStatus.margen)
                    ElevatedButton.icon(
@@ -146,5 +150,71 @@ class NidadaCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _showFinPuestaDialog(BuildContext context) {
+    final marginController = TextEditingController(
+      text: nidada.species.value?.marginDays.toString() ?? '2'
+    );
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Finalizar Puesta'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Se iniciará el periodo de incubación.'),
+            const SizedBox(height: 16),
+            TextField(
+              controller: marginController,
+              decoration: const InputDecoration(
+                labelText: 'Días de Margen Extra',
+                helperText: 'Días adicionales tras la fecha prevista de eclosión',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.number,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancelar'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final margin = int.tryParse(marginController.text) ?? 2;
+              await _finishLaying(context, margin);
+              if (context.mounted) Navigator.pop(context);
+            },
+            child: const Text('Iniciar Incubación'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _finishLaying(BuildContext context, int margin) async {
+    final species = nidada.species.value;
+    if (species == null) return;
+
+    nidada.incubationStartDate = DateTime.now();
+    nidada.status = NidadaStatus.incubando;
+    nidada.customMarginDays = margin;
+
+    await DatabaseService.isar.writeTxn(() async {
+      await DatabaseService.isar.nidadas.put(nidada);
+    });
+
+    await NotificationService.scheduleHatchingNotifications(nidada, species);
+
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Incubación iniciada con $margin días de margen')),
+      );
+      onStartIncubation();
+    }
   }
 }
