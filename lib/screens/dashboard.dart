@@ -27,9 +27,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             valueListenable: themeNotifier,
             builder: (context, mode, _) {
               IconData icon;
-              if (mode == ThemeMode.system) {
-                icon = Icons.brightness_medium;
-              } else if (mode == ThemeMode.dark) {
+              if (mode == ThemeMode.dark) {
                 icon = Icons.nightlight_round;
               } else {
                 icon = Icons.wb_sunny;
@@ -37,26 +35,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
               return IconButton(
                 icon: Icon(icon),
                 onPressed: () async {
-                  ThemeMode newMode;
-                  if (mode == ThemeMode.light) {
-                    newMode = ThemeMode.dark;
-                  } else if (mode == ThemeMode.dark) {
-                    newMode = ThemeMode.system;
-                  } else {
-                    newMode = ThemeMode.light;
-                  }
+                  // Solo alternamos entre Claro y Oscuro
+                  ThemeMode newMode = (mode == ThemeMode.dark) 
+                      ? ThemeMode.light 
+                      : ThemeMode.dark;
                   
                   themeNotifier.value = newMode;
                   final prefs = await SharedPreferences.getInstance();
                   await prefs.setInt('themeMode', newMode.index);
 
                   if (context.mounted) {
-                    String modeName = newMode == ThemeMode.system 
-                        ? 'Sistema (Automático)' 
-                        : (newMode == ThemeMode.dark ? 'Oscuro' : 'Claro');
+                    String modeName = newMode == ThemeMode.dark ? 'Oscuro' : 'Claro';
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('Tema: $modeName'),
+                        content: Text('Modo $modeName activado'),
                         duration: const Duration(seconds: 1),
                       ),
                     );
