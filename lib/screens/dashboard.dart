@@ -49,6 +49,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   themeNotifier.value = newMode;
                   final prefs = await SharedPreferences.getInstance();
                   await prefs.setInt('themeMode', newMode.index);
+
+                  if (context.mounted) {
+                    String modeName = newMode == ThemeMode.system 
+                        ? 'Sistema (Automático)' 
+                        : (newMode == ThemeMode.dark ? 'Oscuro' : 'Claro');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Tema: $modeName'),
+                        duration: const Duration(seconds: 1),
+                      ),
+                    );
+                  }
                 },
                 tooltip: 'Cambiar tema',
               );
