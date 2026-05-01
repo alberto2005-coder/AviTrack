@@ -9,20 +9,26 @@ import 'screens/dashboard.dart';
 final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  
-  // Cargar preferencia de tema guardada
-  final prefs = await SharedPreferences.getInstance();
-  final themeIndex = prefs.getInt('themeMode') ?? 0;
-  themeNotifier.value = ThemeMode.values[themeIndex];
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    
+    // Cargar preferencia de tema guardada
+    final prefs = await SharedPreferences.getInstance();
+    final themeIndex = prefs.getInt('themeMode') ?? 0;
+    themeNotifier.value = ThemeMode.values[themeIndex];
 
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
-  
-  await DatabaseService.initialize();
-  await NotificationService.initialize();
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    
+    // Inicializar servicios con seguridad
+    await DatabaseService.initialize().catchError((e) => debugPrint('Error Isar: $e'));
+    await NotificationService.initialize().catchError((e) => debugPrint('Error Notif: $e'));
+
+  } catch (e) {
+    debugPrint('Error crítico inicio: $e');
+  }
   
   runApp(const AviTrackApp());
 }
