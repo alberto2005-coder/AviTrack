@@ -31,8 +31,7 @@ class NidadaCard extends StatelessWidget {
       case NidadaStatus.puesta:
         statusColor = Colors.grey;
         statusText = 'En Puesta';
-        final eggCount = nidada.currentEggCount;
-        detailText = 'Huevos: $eggCount';
+        detailText = 'Seguimiento de huevos';
         break;
       case NidadaStatus.incubando:
         statusColor = colorScheme.primary;
@@ -121,7 +120,7 @@ class NidadaCard extends StatelessWidget {
             const SizedBox(height: 16),
             Row(
               children: [
-                Icon(Icons.calendar_today, size: 16, color: colorScheme.primary),
+                Icon(Icons.egg_outlined, size: 20, color: colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   detailText,
@@ -129,6 +128,25 @@ class NidadaCard extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
+                if (nidada.status == NidadaStatus.puesta) ...[
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.remove_circle_outline),
+                    onPressed: nidada.currentEggCount > 0 
+                        ? () => _updateEggCount(nidada.currentEggCount - 1)
+                        : null,
+                    color: Colors.red.shade300,
+                  ),
+                  Text(
+                    '${nidada.currentEggCount}',
+                    style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.add_circle_outline),
+                    onPressed: () => _updateEggCount(nidada.currentEggCount + 1),
+                    color: Colors.green.shade300,
+                  ),
+                ],
               ],
             ),
             const SizedBox(height: 16),
@@ -229,5 +247,12 @@ class NidadaCard extends StatelessWidget {
       );
       onStartIncubation();
     }
+  }
+
+  Future<void> _updateEggCount(int newCount) async {
+    nidada.currentEggCount = newCount;
+    await DatabaseService.isar.writeTxn(() async {
+      await DatabaseService.isar.nidadas.put(nidada);
+    });
   }
 }
