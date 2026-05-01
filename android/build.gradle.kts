@@ -38,11 +38,10 @@ subprojects {
 }
 
 subprojects {
-    plugins.withType<com.android.build.gradle.api.AndroidBasePlugin> {
-        extensions.configure<com.android.build.gradle.BaseExtension> {
-            compileSdkVersion(34)
-            defaultConfig {
-                targetSdkVersion(34)
+    project.configurations.all {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "androidx.core" && (requested.name == "core" || requested.name == "core-ktx")) {
+                useVersion("1.6.0")
             }
         }
     }
