@@ -46,8 +46,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.egg_outlined, size: 80, color: Colors.grey.shade300),
-                  const SizedBox(height: 16),
+                  Image.asset(
+                    'assets/logo.png',
+                    height: 120,
+                    errorBuilder: (context, error, stackTrace) => 
+                        Icon(Icons.egg_outlined, size: 80, color: Colors.grey.shade300),
+                  ),
+                  const SizedBox(height: 24),
                   Text(
                     'No hay nidadas activas',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(

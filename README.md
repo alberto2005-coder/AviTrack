@@ -1,4 +1,4 @@
-# 🕊️ AviTrack - Gestión de Cría de Aves
+# <img src="assets/logo.png" width="40" height="40" valign="middle"> AviTrack - Gestión de Cría de Aves
 
 AviTrack es una aplicación móvil diseñada para criadores de aves que buscan un control total, preciso y **100% privado** de sus nidadas. La aplicación funciona de forma totalmente local, sin necesidad de conexión a internet ni servicios en la nube.
 
