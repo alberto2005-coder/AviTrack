@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 import '../models/nidada.dart';
+import '../services/database_service.dart';
+import '../services/notification_service.dart';
 
 class NidadaCard extends StatelessWidget {
   final Nidada nidada;
