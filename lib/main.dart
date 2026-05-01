@@ -25,7 +25,7 @@ class AviTrackApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder<ThemeMode>(
       valueListenable: themeNotifier,
-      builder: (_, ThemeMode currentMode, __) {
+      builder: (_, currentMode, _) {
         return MaterialApp(
           title: 'AviTrack',
           debugShowCheckedModeBanner: false,
