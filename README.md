@@ -33,3 +33,46 @@ El archivo generado se encontrará en: `build\app\outputs\flutter-apk\app-releas
 
 ---
 Desarrollado con ❤️ para criadores apasionados.
+
+
+
+---
+
+# English Version
+
+🕊️ **AviTrack — Advanced Bird Breeding Management**
+
+AviTrack is a modern, professional application designed for bird breeders who want full control over their clutches. With an elegant design and smart tools, AviTrack helps you make sure no hatching catches you by surprise.
+
+![Logo](assets/logo.png)
+
+## ✨ Key Features
+
+*   **📊 Clutch Tracking:** Record egg laying, the start of incubation and the expected hatching date.
+*   **⏳ Custom Extra Margin:** Configure additional margin days after hatching for each clutch individually. You decide how long to wait!
+*   **🔔 Smart Notifications:** Automatic alarms to alert you about each egg and on hatching day, always at 09:00 AM.
+*   **📖 Species Dictionary:** Editable database with default incubation times and margins for canaries, parakeets and more.
+*   **🌓 Dynamic Dark Mode:** Choose Light, Dark, or let the app automatically follow your phone's setting.
+*   **🍳 Egg Counter:** Add or subtract eggs in real time during the laying phase with a single tap.
+
+## 🛠️ Installation and Build
+
+AviTrack is built with **Flutter** and uses **Isar Database** for ultra-fast local storage.
+
+### Requirements
+*   Flutter SDK (v3.41 or later recommended)
+*   Android SDK 34+
+
+### Building
+To generate your own release APK:
+```powershell
+flutter build apk --release
+```
+The generated file will be located at: `build\app\outputs\flutter-apk\app-release.apk`
+
+## 📱 Screenshots
+*(Coming soon)*
+
+---
+Developed with ❤️ for passionate breeders.
+
